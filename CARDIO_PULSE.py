@@ -3,16 +3,12 @@ import numpy as np
 import pandas as pd
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestClassifier
-# -------------------------------
+
 # Session State Initialization
-# -------------------------------
 if "cycle" not in st.session_state:
     st.session_state.cycle = 0
-
-
-# -------------------------------
+    
 # Page Config
-# -------------------------------
 st.set_page_config(
     page_title="CardioGuard - Heart Emergency Predictor",
     page_icon="💓",
@@ -20,9 +16,7 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# -------------------------------
 # Custom CSS for Background + Cards + Heartbeat
-# -------------------------------
 page_bg = """
 <style>
 /* Background */
@@ -66,17 +60,13 @@ h1, h2, h3, h4 {
 """
 st.markdown(page_bg, unsafe_allow_html=True)
 
-# -------------------------------
 # Sidebar Branding
-# -------------------------------
 st.sidebar.title("💓 CardioGuard")
 st.sidebar.image("https://www.pollenhealthcure.com/assets/images/icons/healthcare.png", use_container_width=True)
 st.sidebar.markdown("### AI-Powered Silent Heart Emergency Predictor")
 st.sidebar.info("Built in 24 Hours at HACKVIBE 2025 🚀")
 
-# -------------------------------
 # Helper function: Stylish Status Card
-# -------------------------------
 def status_card(text, color):
     st.markdown(
         f"""
@@ -88,9 +78,7 @@ def status_card(text, color):
         unsafe_allow_html=True
     )
 
-# -------------------------------
 # Step 1: Generate synthetic dataset
-# -------------------------------
 def generate_dataset(n=500):
     pulse = np.random.normal(75, 10, n).astype(int)
     spo2 = np.random.normal(97, 2, n).astype(int)
@@ -106,9 +94,7 @@ def generate_dataset(n=500):
 
 data = generate_dataset(1000)
 
-# -------------------------------
 # Step 2: Train ML Model
-# -------------------------------
 X = data[["Pulse", "SpO2"]]
 y = data["Risk"]
 
@@ -118,9 +104,7 @@ model = RandomForestClassifier(n_estimators=100, random_state=42)
 model.fit(X_train, y_train)
 accuracy = model.score(X_test, y_test)
 
-# -------------------------------
 # Step 3: Simulate Live Data with Guaranteed At-Risk
-# -------------------------------
 def simulate_live_data(n=20):
     pulse = []
     spo2 = []
@@ -137,7 +121,7 @@ def simulate_live_data(n=20):
             pulse.append(np.random.normal(75, 8))
             spo2.append(np.random.normal(97, 2))
 
-    # 🔴 Force last reading to be at-risk for demo
+    #  Force last reading to be at-risk for demo
     pulse.append(np.random.randint(130, 150))  # high pulse
     spo2.append(np.random.randint(85, 90))     # low oxygen
 
@@ -148,7 +132,7 @@ def simulate_live_data(n=20):
 
 live_data = simulate_live_data(50)
 live_data["Prediction"] = model.predict(live_data[["Pulse", "SpO2"]])
-# --- Cycle Control for Demo Effect ---
+# Cycle Control for Demo Effect 
 if "cycle" not in st.session_state:
     st.session_state.cycle = 0
 
@@ -162,14 +146,11 @@ st.session_state.cycle = cycle + 1  # move to next cycle
 latest_pulse = int(live_data["Pulse"].iloc[-1])
 latest_spo2 = int(live_data["SpO2"].iloc[-1])
 
-
 #latest_pred = live_data["Prediction"].iloc[-1]
-# -------------------------------
 # UI Display
-# -------------------------------
 # Add centered icon
-# --- UI: Centered Logo and Title ---
-# --- UI: Centered Icon + Left-Aligned Title ---
+#  UI: Centered Logo and Title 
+#  UI: Centered Icon + Left-Aligned Title 
 # Center the icon
 st.markdown(
     """
